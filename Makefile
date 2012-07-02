@@ -4,7 +4,7 @@ BIN=libtiedye.so
 
 $(BIN): $(OBJS)
 	gcc -shared -fPIC -DPIC -o $(BIN) $(OBJS) `pkg-config --libs gtk+-3.0` -g
-#	strip $(BIN)
+	strip $(BIN)
 
 clean:
 	rm -f $(BIN) $(OBJS)
