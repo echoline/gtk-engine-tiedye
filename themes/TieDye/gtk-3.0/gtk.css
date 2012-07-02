@@ -1,0 +1,24 @@
+* {
+	engine: tiedye;
+	padding: 0.25em;
+	border: 1px solid black;
+	color: black;
+}
+
+*:insensitive {
+	color: #888;
+}
+
+*:selected {
+	background-color: yellow;
+}
+
+GtkEntry {
+	color: black;
+	background-color: white;
+}
+
+GtkTextView {
+	color: black;
+	background-color: white;
+}
