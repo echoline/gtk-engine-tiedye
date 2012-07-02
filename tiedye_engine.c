@@ -19,7 +19,7 @@
  *
  * Authors: Carlos Garnacho <carlosg@gnome.org>
  *          Cosimo Cecchi <cosimoc@gnome.org>
- *          Eli Cohen
+ *          Eli Cohen <eli.neoturbine.net>
  */
 
 #include <gtk/gtk.h>
