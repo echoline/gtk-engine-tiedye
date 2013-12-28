@@ -26,6 +26,7 @@
 #include <gmodule.h>
 #include <math.h>
 #include <cairo-gobject.h>
+#include "blur.h"
 
 #define TIEDYE_NAMESPACE "tiedye"
 
@@ -106,6 +107,8 @@ pool_gen (gint width, gint height)
   }
 
   cairo_destroy (cr);
+
+  blur_image_surface (pool, 15, width, height);
 }
 
 static void
