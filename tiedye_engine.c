@@ -26,6 +26,7 @@
 #include <gmodule.h>
 #include <math.h>
 #include <cairo-gobject.h>
+#include "blur.h"
 
 #define TIEDYE_NAMESPACE "tiedye"
 
@@ -70,8 +71,10 @@ tiedye_engine_init (TiedyeEngine *self)
 }
 
 static void
-pool_gen (gint width, gint height)
+pool_gen ()
 {
+  gint width = pool_width;
+  gint height = pool_height;
   gdouble xs, ys, xe, ye, r, inc;
   gint i;
   gdouble area = width * height;
@@ -106,6 +109,8 @@ pool_gen (gint width, gint height)
   }
 
   cairo_destroy (cr);
+
+  blur_image_surface (pool, 15, width, height);
 }
 
 static void
@@ -119,6 +124,7 @@ tiedye_engine_render_background (GtkThemingEngine *engine,
   GdkRGBA color;
   GtkStateFlags flags = gtk_theming_engine_get_state (engine);
   gboolean generate = FALSE;
+  gint scr_width, scr_height;
 
   gtk_theming_engine_get_background_color (engine, flags, &color);
 
@@ -134,7 +140,15 @@ tiedye_engine_render_background (GtkThemingEngine *engine,
       pool_height = height;
     }
     if (generate) {
-      pool_gen (width, height);
+      scr_width = gdk_screen_get_width (gdk_window_get_screen (gdk_get_default_root_window ()));
+      scr_height = gdk_screen_get_height (gdk_window_get_screen (gdk_get_default_root_window ()));
+
+      if (scr_width > pool_width)
+        pool_width = scr_width;
+      if (scr_height > pool_height)
+        pool_height = scr_height;
+
+      pool_gen ();
     }
     cairo_set_source_surface (cr, pool, 0, 0);
   }
